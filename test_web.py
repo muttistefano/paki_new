@@ -20,8 +20,13 @@ data = {'Date' : range(0,100),
         'T3': [random.uniform(10,40) for _ in range(100)],
         'H1': [random.uniform(10,100) for _ in range(100)],
         'H2': [random.uniform(10,100) for _ in range(100)],
+        'H3': [random.uniform(10,100) for _ in range(100)],
         'L1': [bool(random.getrandbits(1)) for _ in range(100)],
         'L2': [bool(random.getrandbits(1)) for _ in range(100)],
+        'R3': [bool(random.getrandbits(1)) for _ in range(100)],
+        'R4': [bool(random.getrandbits(1)) for _ in range(100)],
+        'R5': [bool(random.getrandbits(1)) for _ in range(100)],
+        'R6': [bool(random.getrandbits(1)) for _ in range(100)]
         }
 
 #df = pd.DataFrame (data)

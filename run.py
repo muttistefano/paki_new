@@ -38,7 +38,7 @@ class PakiController(object):
         self.h3_queue.append(self.h3)
         now = datetime.now()
         s1 = now.strftime("%m-%d-%Y-%H:%M:%S")
-        str_log = s1 + " " + str(self.t1) + " " + str(self.h1) + " " + str(self.t2) + " " + str(self.h2) + " " + str(self.t3) + " " + str(self.h3) + "1 1\n" 
+        str_log = s1 + " " + str(self.t1) + " " + str(self.h1) + " " + str(self.t2) + " " + str(self.h2) + " " + str(self.t3) + " " + str(self.h3) + " 1 1 1 1 1 1\n" 
         #print(str_log)
         with open("log.csv", "a") as f:
             f.write(str(str_log))
