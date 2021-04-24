@@ -4,32 +4,42 @@ import Adafruit_DHT
 from digitalio import DigitalInOut, Direction
 import threading
 import collections
+from datetime import datetime
+
 
 
 class PakiController(object):
 
     def __init__(self):
+        self.log_file = open("log.csv","a")
+
         self.temp_init()
         # self.rele_init()
         self.start_threads()
         self.run_app()
 
     def temp_init(self):
-        # self.dhtDevice1 = adafruit_dht.DHT22(board.D21)
-
-        # self.dhtDevice2 = adafruit_dht.DHT22(board.D20)
         self.t1, self.h1 = 0, 0
-        # self.t2, self.h2 = 0, 0
-        self.t1_queue = collections.deque(maxlen=1000)
-        # self.t2_queue = collections.deque(maxlen=1000)
-        self.h1_queue = collections.deque(maxlen=1000)
-        # self.h2_queue = collections.deque(maxlen=1000)
+        self.t2, self.h2 = 0, 0
+        self.t3, self.h3 = 0, 0
+        self.t1_queue = collections.deque(maxlen=10)
+        self.h1_queue = collections.deque(maxlen=10)
+        self.t2_queue = collections.deque(maxlen=10)
+        self.h2_queue = collections.deque(maxlen=10)
+        self.t3_queue = collections.deque(maxlen=10)
+        self.h3_queue = collections.deque(maxlen=10)
 
     def log_queue(self):
         self.t1_queue.append(self.t1)
-        # self.t2_queue.append(self.t2)
+        self.t2_queue.append(self.t2)
         self.h1_queue.append(self.h1)
-        # self.h2_queue.append(self.h2)
+        self.h2_queue.append(self.h2)
+        self.t3_queue.append(self.t3)
+        self.h3_queue.append(self.h3)
+        now = datetime.now()
+        s1 = now.strftime("%m-%d-%Y-%H:%M:%S")
+        str_log = s1 + " " + str(self.t1) + " " + str(self.h1) + " " + str(self.t2) + " " + str(self.h2) + " " + str(self.t3) + " " + str(self.h3) + "1 1 \n" 
+        self.log_file.write(str_log)
 
     def rele_init(self):
         rele1           = DigitalInOut(board.D23)
@@ -49,16 +59,18 @@ class PakiController(object):
         while True:
             try:
                 self.h1 , self.t1 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 21)
-                # self.t2 = self.dhtDevice2.temperature
-                # self.h2 = self.dhtDevice2.humidity
+                # self.h2 , self.t2 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 20)
+                # self.h3 , self.t3 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 16)
                 self.log_queue()
+                time.sleep(2)
             except RuntimeError as error:
                 print(error.args[0])
                 time.sleep(2.0)
                 continue
             except Exception as error:
-                dhtDevice.exit()
-                raise error
+                print(error.args[0])
+                print("MegaPD")
+                continue
 
     def start_threads(self):
         temp_th_idx = threading.Thread(target=self.temp_thread)
