@@ -71,6 +71,10 @@ class PakiController(object):
             # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
             time.sleep(1)
         
+
+
+if __name__ == "__main__":
+    PakiController()
  
 
 
