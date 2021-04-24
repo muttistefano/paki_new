@@ -1,6 +1,6 @@
 import time
 import board
-import adafruit_dht
+import Adafruit_DHT
 from digitalio import DigitalInOut, Direction
 import threading
 import collections
@@ -15,7 +15,8 @@ class PakiController(object):
         self.run_app()
 
     def temp_init(self):
-        self.dhtDevice1 = adafruit_dht.DHT22(board.D21)
+        # self.dhtDevice1 = adafruit_dht.DHT22(board.D21)
+
         # self.dhtDevice2 = adafruit_dht.DHT22(board.D20)
         self.t1, self.h1 = 0, 0
         # self.t2, self.h2 = 0, 0
@@ -47,8 +48,7 @@ class PakiController(object):
     def temp_thread(self):
         while True:
             try:
-                self.t1 = self.dhtDevice1.temperature
-                self.h1 = self.dhtDevice1.humidity
+                self.h1 , self.t1 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 21)
                 # self.t2 = self.dhtDevice2.temperature
                 # self.h2 = self.dhtDevice2.humidity
                 self.log_queue()
