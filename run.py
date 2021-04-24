@@ -11,7 +11,7 @@ from datetime import datetime
 class PakiController(object):
 
     def __init__(self):
-        self.log_file = open("log.csv","a")
+        #self.log_file = open("log.csv","w")
 
         self.temp_init()
         # self.rele_init()
@@ -38,8 +38,12 @@ class PakiController(object):
         self.h3_queue.append(self.h3)
         now = datetime.now()
         s1 = now.strftime("%m-%d-%Y-%H:%M:%S")
-        str_log = s1 + " " + str(self.t1) + " " + str(self.h1) + " " + str(self.t2) + " " + str(self.h2) + " " + str(self.t3) + " " + str(self.h3) + "1 1 \n" 
-        self.log_file.write(str_log)
+        str_log = s1 + " " + str(self.t1) + " " + str(self.h1) + " " + str(self.t2) + " " + str(self.h2) + " " + str(self.t3) + " " + str(self.h3) + "1 1\n" 
+        #print(str_log)
+        with open("log.csv", "a") as f:
+            f.write(str(str_log))
+        #self.log_file.write(str_log)
+        #self.log_file.write("mammt")
 
     def rele_init(self):
         rele1           = DigitalInOut(board.D23)

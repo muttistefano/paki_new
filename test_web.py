@@ -24,7 +24,8 @@ data = {'Date' : range(0,100),
         'L2': [bool(random.getrandbits(1)) for _ in range(100)],
         }
 
-df = pd.DataFrame (data)
+#df = pd.DataFrame (data)
+df = pd.read_csv('log.csv') 
 
 app = dash.Dash(__name__)
 server = app.server
@@ -216,5 +217,5 @@ def update_graph(grpname):
 
 
 if __name__ == '__main__':
-    # app.run_server(host= '0.0.0.0',debug=True)
-    app.run_server(debug=True)
+    app.run_server(host= '0.0.0.0',debug=True)
+    #app.run_server(debug=True)
