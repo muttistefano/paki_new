@@ -30,8 +30,9 @@ data = {'Date' : range(0,100),
         }
 
 #df = pd.DataFrame (data)
-df = pd.read_csv('log.csv') 
-
+df = pd.read_csv('log.csv',delim_whitespace=True) 
+print(df)
+print(df.keys())
 app = dash.Dash(__name__)
 server = app.server
 
