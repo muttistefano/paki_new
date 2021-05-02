@@ -123,6 +123,7 @@ class PakiController(object):
     def run_app(self):
         while True:
             print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
+            run_pending()
             # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
             time.sleep(1)
         
