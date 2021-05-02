@@ -7,7 +7,7 @@ import threading
 import collections
 from datetime import datetime
 from statistics import mean
-from schedule import every, repeat, run_pending
+# from schedule import every, repeat, run_pending
 
 
 class PakiController(object):
@@ -27,26 +27,31 @@ class PakiController(object):
 
     @repeat(every().day.at("10:30"))
     def Light1On(self):
+        print("Turning light 1 On")
         rele1.value = True
         time.sleep(0.5)
 
     @repeat(every().day.at("10:30"))
     def Light1Off(self):
+        print("Turning light 1 Off")
         rele1.value = False
         time.sleep(0.5)
 
     @repeat(every().day.at("10:30"))
     def Light2On(self):
+        print("Turning light 2 On")
         rele2.value = True
         time.sleep(0.5)
 
     @repeat(every().day.at("10:30"))
     def Light2Off(self):
+        print("Turning light 2 Off")
         rele2.value = False
         time.sleep(0.5)
 
-    @repeat(every(10).minutes)
+    @repeat(every(1).minutes)
     def log_to_file(self):
+        print("Logging data to file")
         now = datetime.now()
         s1 = now.strftime("%Y-%d-%m-%H:%M:%S")
         str_log = s1 + " " + str(mean(self.t1_queue)) + " " + str(mean(self.h1_queue)) + " " + str(mean(self.t2_queue)) + " " + str(mean(self.h2_queue)) + " " + str(mean(self.t3_queue))  + " " + str(mean(self.h3_queue)) + " 1 1 1 1 1 1\n" 
@@ -56,6 +61,7 @@ class PakiController(object):
 
     @repeat(every(20).seconds)
     def log_queue(self):
+        print("Reading data from sensors")
         self.temp_read()
         self.t1_queue.append(self.t1)
         self.t2_queue.append(self.t2)
