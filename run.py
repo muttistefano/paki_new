@@ -49,8 +49,6 @@ class PakiController(object):
             f.write(str(str_log))
 
     def log_queue(self):
-        print("Reading data from sensors")
-        self.temp_read()
         self.t1_queue.append(self.t1)
         self.t2_queue.append(self.t2)
         self.h1_queue.append(self.h1)
@@ -86,6 +84,7 @@ class PakiController(object):
     def temp_read(self):
         while True:
             try:
+                print("Reading data from sensors")
                 self.h1 , self.t1 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 21)
                 self.h2 , self.t2 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 20)
                 self.h3 , self.t3 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 16)
@@ -108,6 +107,7 @@ class PakiController(object):
         temp_th_idx.start()
         temp_th_idx2 = threading.Thread(target=self.temp_read)
         temp_th_idx2.start()
+        print("threads started")
         return True
 
     def run_app(self):
