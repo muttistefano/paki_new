@@ -7,7 +7,7 @@ import threading
 import collections
 from datetime import datetime
 from statistics import mean
-# from schedule import every, repeat, run_pending
+from schedule import every, repeat, run_pending
 
 
 class PakiController(object):
