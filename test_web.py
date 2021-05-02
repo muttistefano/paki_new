@@ -194,7 +194,7 @@ def update_graph(grpname):
     [Input('interval-component1', 'n_intervals')]
 )
 def update_graph(grpname):
-    if bool(random.getrandbits(1)):
+    if df["L1"].iloc[-1]:
         return "#FFFF00"
     else:
         return "#000000"	
@@ -205,7 +205,7 @@ def update_graph(grpname):
     [Input('interval-component1', 'n_intervals')]
 )
 def update_graph(grpname):
-    if bool(random.getrandbits(1)):
+    if df["L2"].iloc[-1]:
         return "#FFFF00"
     else:
         return "#000000"	
@@ -216,7 +216,7 @@ def update_graph(grpname):
     [Input('interval-component1', 'n_intervals')]
 )
 def update_graph(grpname):
-    if bool(random.getrandbits(1)):
+    if df["R3"].iloc[-1]:
         return "#FF0000"
     else:
         return "#000000"	
