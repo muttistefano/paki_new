@@ -59,7 +59,7 @@ class PakiController(object):
         with open("log.csv", "a") as f:
             f.write(str(str_log))
 
-    @repeat(every(20).seconds)
+    @repeat(every(10).seconds,args=[self])
     def log_queue(self):
         print("Reading data from sensors")
         self.temp_read()
