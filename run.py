@@ -48,12 +48,7 @@ class PakiController(object):
     def log_to_file(self):
         now = datetime.now()
         s1 = now.strftime("%Y-%d-%m-%H:%M:%S")
-        str_log = s1 + " " + str(mean(self.t1_queue)) 
-                     + " " + str(mean(self.h1_queue))
-                     + " " + str(mean(self.t2_queue)) 
-                     + " " + str(mean(self.h2_queue)) 
-                     + " " + str(mean(self.t3_queue)) 
-                     + " " + str(mean(self.h3_queue)) + " 1 1 1 1 1 1\n" 
+        str_log = s1 + " " + str(mean(self.t1_queue)) + " " + str(mean(self.h1_queue)) + " " + str(mean(self.t2_queue)) + " " + str(mean(self.h2_queue)) + " " + str(mean(self.t3_queue))  + " " + str(mean(self.h3_queue)) + " 1 1 1 1 1 1\n" 
         
         with open("log.csv", "a") as f:
             f.write(str(str_log))
