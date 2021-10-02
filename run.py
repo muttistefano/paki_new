@@ -30,7 +30,7 @@ class PakiController(object):
         self.start_threads()
         self.run_app()
 
-    def job(t):
+    def job(self,t):
         print ("I'm working...", t)
         return
 
