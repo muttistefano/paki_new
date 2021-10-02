@@ -83,36 +83,18 @@ class PakiController(object):
         self.h3_queue = collections.deque(maxlen=30)
 
     def rele_init(self):
-        while True:
-            print("on")
-            self.rele1           = DigitalInOut(board.D23)
-            self.rele1.direction = Direction.OUTPUT
-            self.rele1.value     = False
-            self.rele2           = DigitalInOut(board.D24)
-            self.rele2.direction = Direction.OUTPUT
-            self.rele2.value     = False
-            self.rele3           = DigitalInOut(board.D27)
-            self.rele3.direction = Direction.OUTPUT
-            self.rele3.value     = False
-            self.rele4           = DigitalInOut(board.D18)
-            self.rele4.direction = Direction.OUTPUT
-            self.rele4.value     = False
-            time.sleep(0.1)
-            print("off")
-            self.rele1           = DigitalInOut(board.D23)
-            self.rele1.direction = Direction.OUTPUT
-            self.rele1.value     = True
-            self.rele2           = DigitalInOut(board.D24)
-            self.rele2.direction = Direction.OUTPUT
-            self.rele2.value     = True
-            self.rele3           = DigitalInOut(board.D27)
-            self.rele3.direction = Direction.OUTPUT
-            self.rele3.value     = True
-            self.rele4           = DigitalInOut(board.D18)
-            self.rele4.direction = Direction.OUTPUT
-            self.rele4.value     = True
-            time.sleep(0.1)
-
+        self.rele1           = DigitalInOut(board.D23)
+        self.rele1.direction = Direction.OUTPUT
+        self.rele1.value     = False
+        self.rele2           = DigitalInOut(board.D24)
+        self.rele2.direction = Direction.OUTPUT
+        self.rele2.value     = False
+        self.rele3           = DigitalInOut(board.D27)
+        self.rele3.direction = Direction.OUTPUT
+        self.rele3.value     = False
+        self.rele4           = DigitalInOut(board.D18)
+        self.rele4.direction = Direction.OUTPUT
+        self.rele4.value     = False
 
     def temp_read(self):
         while True:
@@ -148,11 +130,39 @@ class PakiController(object):
 
     def run_app(self):
         while True:
-            print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
-            print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
-            print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
-            schedule.run_pending()
-            time.sleep(5)
+            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
+            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
+            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
+            # schedule.run_pending()
+            print("on")
+            self.rele1           = DigitalInOut(board.D23)
+            self.rele1.direction = Direction.OUTPUT
+            self.rele1.value     = False
+            self.rele2           = DigitalInOut(board.D24)
+            self.rele2.direction = Direction.OUTPUT
+            self.rele2.value     = False
+            self.rele3           = DigitalInOut(board.D27)
+            self.rele3.direction = Direction.OUTPUT
+            self.rele3.value     = False
+            self.rele4           = DigitalInOut(board.D18)
+            self.rele4.direction = Direction.OUTPUT
+            self.rele4.value     = False
+            time.sleep(0.1)
+            print("off")
+            self.rele1           = DigitalInOut(board.D23)
+            self.rele1.direction = Direction.OUTPUT
+            self.rele1.value     = True
+            self.rele2           = DigitalInOut(board.D24)
+            self.rele2.direction = Direction.OUTPUT
+            self.rele2.value     = True
+            self.rele3           = DigitalInOut(board.D27)
+            self.rele3.direction = Direction.OUTPUT
+            self.rele3.value     = True
+            self.rele4           = DigitalInOut(board.D18)
+            self.rele4.direction = Direction.OUTPUT
+            self.rele4.value     = True
+            time.sleep(0.1)
+            time.sleep(1)
         
 
 
