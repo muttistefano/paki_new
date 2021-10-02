@@ -14,9 +14,9 @@ class PakiController(object):
 
     def __init__(self):
         
-        GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         self.dhtDevice1 = adafruit_dht.DHT22(board.D16, use_pulseio=False)
         self.dhtDevice2 = adafruit_dht.DHT22(board.D20, use_pulseio=False)
         self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
@@ -36,6 +36,8 @@ class PakiController(object):
 
     def Light1On(self):
         print("Turning light 1 On")
+        print(self.rele1)
+        print(self.rele1.value)
         self.rele1.value = True
         time.sleep(0.5)
 
@@ -130,9 +132,9 @@ class PakiController(object):
 
     def run_app(self):
         while True:
-            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
-            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
-            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
+            print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
+            print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
+            print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
             schedule.run_pending()
             time.sleep(5)
         
