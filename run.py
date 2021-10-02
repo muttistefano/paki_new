@@ -21,15 +21,15 @@ class PakiController(object):
         self.dhtDevice2 = adafruit_dht.DHT22(board.D20, use_pulseio=False)
         self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
 
-        schedule.every().day.at("16:20").do(self.Light1On)
-        schedule.every().day.at("16:21").do(self.Light1Off)
+        schedule.every().day.at("16:21").do(self.Light1On)
+        schedule.every().day.at("16:22").do(self.Light1Off)
         schedule.every().day.at("16:05").do(self.Light2On)
         schedule.every().day.at("16:05").do(self.Light2Off)
 
 
 
         self.temp_init()
-        # self.rele_init()
+        self.rele_init()
         self.start_threads()
         self.run_app()
 
