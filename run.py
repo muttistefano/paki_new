@@ -1,4 +1,3 @@
-import schedule
 import time
 import board
 import adafruit_dht
@@ -8,7 +7,7 @@ import threading
 import collections
 from datetime import datetime
 from statistics import mean
-from schedule import every, repeat, run_pending
+import schedule
 
 
 class PakiController(object):
@@ -22,10 +21,19 @@ class PakiController(object):
         self.dhtDevice2 = adafruit_dht.DHT22(board.D20, use_pulseio=False)
         self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
 
+        schedule.every().day.at("16:05").do(self.job,'It is 01:00')
+
+
+
         self.temp_init()
         # self.rele_init()
         self.start_threads()
         self.run_app()
+
+    def job(t):
+        print ("I'm working...", t)
+        return
+
 
     def Light1On(self):
         print("Turning light 1 On")
@@ -126,7 +134,7 @@ class PakiController(object):
             print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
             print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
             print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
-            time.sleep(1)
+            time.sleep(5)
         
 
 
