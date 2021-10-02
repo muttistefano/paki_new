@@ -31,6 +31,7 @@ class PakiController(object):
 
         self.temp_init()
         self.rele_init()
+        self.LCD_init()
         self.start_threads()
         self.run_app()
 
