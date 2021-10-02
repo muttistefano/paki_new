@@ -1,7 +1,8 @@
 import schedule
 import time
 import board
-import Adafruit_DHT
+import adafruit_dht
+import RPi.GPIO as GPIO  
 from digitalio import DigitalInOut, Direction
 import threading
 import collections
@@ -14,6 +15,13 @@ class PakiController(object):
 
     def __init__(self):
         
+        GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        self.dhtDevice1 = adafruit_dht.DHT22(board.D16, use_pulseio=False)
+        self.dhtDevice2 = adafruit_dht.DHT22(board.D20, use_pulseio=False)
+        self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
+
         self.temp_init()
         # self.rele_init()
         self.start_threads()
@@ -85,9 +93,12 @@ class PakiController(object):
         while True:
             try:
                 print("Reading data from sensors")
-                self.h1 , self.t1 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 21)
-                self.h2 , self.t2 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 20)
-                self.h3 , self.t3 = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 16)
+                self.t1      = self.dhtDevice1.temperature
+                self.h1      = self.dhtDevice1.humidity
+                self.t2      = self.dhtDevice2.temperature
+                self.h2      = self.dhtDevice2.humidity
+                self.t3      = self.dhtDevice3.temperature
+                self.h3      = self.dhtDevice3.humidity
                 self.log_queue()
                 time.sleep(2)
             except RuntimeError as error:
