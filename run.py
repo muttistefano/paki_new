@@ -84,6 +84,7 @@ class PakiController(object):
 
     def rele_init(self):
         while True:
+            print("on")
             self.rele1           = DigitalInOut(board.D23)
             self.rele1.direction = Direction.OUTPUT
             self.rele1.value     = False
@@ -97,6 +98,7 @@ class PakiController(object):
             self.rele4.direction = Direction.OUTPUT
             self.rele4.value     = False
             time.sleep(0.1)
+            print("off")
             self.rele1           = DigitalInOut(board.D23)
             self.rele1.direction = Direction.OUTPUT
             self.rele1.value     = True
