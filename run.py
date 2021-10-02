@@ -8,6 +8,7 @@ import collections
 from datetime import datetime
 from statistics import mean
 import schedule
+import adafruit_character_lcd.character_lcd as characterlcd
 
 
 class PakiController(object):
@@ -33,6 +34,22 @@ class PakiController(object):
         self.start_threads()
         self.run_app()
 
+    def LCD_init(self):
+        lcd_columns = 16
+        lcd_rows = 2
+
+
+        lcd_rs = DigitalInOut(board.D11)
+        lcd_en = DigitalInOut(board.D5)
+        lcd_d4 = DigitalInOut(board.D6)
+        lcd_d5 = DigitalInOut(board.D13)
+        lcd_d6 = DigitalInOut(board.D19)
+        lcd_d7 = DigitalInOut(board.D26)
+
+
+        # Initialise the lcd class
+        self.lcd = characterlcd.Character_LCD_Mono(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_columns, lcd_rows)
+        self.lcd.clear()
 
     def Light1On(self):
         print("Turning light 1 On")
@@ -133,36 +150,12 @@ class PakiController(object):
             # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
             # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
             # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
-            # schedule.run_pending()
-            print("on")
-            self.rele1           = DigitalInOut(board.D23)
-            self.rele1.direction = Direction.OUTPUT
-            self.rele1.value     = False
-            self.rele2           = DigitalInOut(board.D24)
-            self.rele2.direction = Direction.OUTPUT
-            self.rele2.value     = False
-            self.rele3           = DigitalInOut(board.D27)
-            self.rele3.direction = Direction.OUTPUT
-            self.rele3.value     = False
-            self.rele4           = DigitalInOut(board.D18)
-            self.rele4.direction = Direction.OUTPUT
-            self.rele4.value     = False
-            time.sleep(0.1)
-            print("off")
-            self.rele1           = DigitalInOut(board.D23)
-            self.rele1.direction = Direction.OUTPUT
-            self.rele1.value     = True
-            self.rele2           = DigitalInOut(board.D24)
-            self.rele2.direction = Direction.OUTPUT
-            self.rele2.value     = True
-            self.rele3           = DigitalInOut(board.D27)
-            self.rele3.direction = Direction.OUTPUT
-            self.rele3.value     = True
-            self.rele4           = DigitalInOut(board.D18)
-            self.rele4.direction = Direction.OUTPUT
-            self.rele4.value     = True
-            time.sleep(0.1)
-            time.sleep(1)
+            schedule.run_pending()
+            lcd_line_1 = datetime.now().strftime('%b %d  %H:%M:%S\n')
+
+            # combine both lines into one update to the display
+            self.lcd.message = lcd_line_1 
+
         
 
 
