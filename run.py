@@ -21,8 +21,8 @@ class PakiController(object):
         self.dhtDevice2 = adafruit_dht.DHT22(board.D20, use_pulseio=False)
         self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
 
-        schedule.every().day.at("16:21").do(self.Light1On)
-        schedule.every().day.at("16:22").do(self.Light1Off)
+        schedule.every().day.at("16:33").do(self.Light1On)
+        schedule.every().day.at("16:33:10").do(self.Light1Off)
         schedule.every().day.at("16:05").do(self.Light2On)
         schedule.every().day.at("16:05").do(self.Light2Off)
 
@@ -36,8 +36,6 @@ class PakiController(object):
 
     def Light1On(self):
         print("Turning light 1 On")
-        print(self.rele1)
-        print(self.rele1.value)
         self.rele1.value = True
         time.sleep(0.5)
 
@@ -85,33 +83,18 @@ class PakiController(object):
         self.h3_queue = collections.deque(maxlen=30)
 
     def rele_init(self):
-        while True:
-            self.rele1           = DigitalInOut(board.D23)
-            self.rele1.direction = Direction.OUTPUT
-            self.rele1.value     = False
-            self.rele2           = DigitalInOut(board.D24)
-            self.rele2.direction = Direction.OUTPUT
-            self.rele2.value     = False
-            self.rele3           = DigitalInOut(board.D27)
-            self.rele3.direction = Direction.OUTPUT
-            self.rele3.value     = False
-            self.rele4           = DigitalInOut(board.D18)
-            self.rele4.direction = Direction.OUTPUT
-            self.rele4.value     = False
-            time.sleep(0.2)
-            self.rele1           = DigitalInOut(board.D23)
-            self.rele1.direction = Direction.OUTPUT
-            self.rele1.value     = True
-            self.rele2           = DigitalInOut(board.D24)
-            self.rele2.direction = Direction.OUTPUT
-            self.rele2.value     = True
-            self.rele3           = DigitalInOut(board.D27)
-            self.rele3.direction = Direction.OUTPUT
-            self.rele3.value     = True
-            self.rele4           = DigitalInOut(board.D18)
-            self.rele4.direction = Direction.OUTPUT
-            self.rele4.value     = True
-            time.sleep(0.2)
+        self.rele1           = DigitalInOut(board.D23)
+        self.rele1.direction = Direction.OUTPUT
+        self.rele1.value     = False
+        self.rele2           = DigitalInOut(board.D24)
+        self.rele2.direction = Direction.OUTPUT
+        self.rele2.value     = False
+        self.rele3           = DigitalInOut(board.D27)
+        self.rele3.direction = Direction.OUTPUT
+        self.rele3.value     = False
+        self.rele4           = DigitalInOut(board.D18)
+        self.rele4.direction = Direction.OUTPUT
+        self.rele4.value     = False
 
     def temp_read(self):
         while True:
