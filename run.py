@@ -98,7 +98,7 @@ class PakiController(object):
             self.rele4           = DigitalInOut(board.D18)
             self.rele4.direction = Direction.OUTPUT
             self.rele4.value     = False
-            time.sleep(2)
+            time.sleep(0.2)
             self.rele1           = DigitalInOut(board.D23)
             self.rele1.direction = Direction.OUTPUT
             self.rele1.value     = True
@@ -111,7 +111,7 @@ class PakiController(object):
             self.rele4           = DigitalInOut(board.D18)
             self.rele4.direction = Direction.OUTPUT
             self.rele4.value     = True
-            time.sleep(2)
+            time.sleep(0.2)
 
     def temp_read(self):
         while True:
