@@ -30,7 +30,7 @@ data = {'Date' : range(0,100),
         }
 
 #df = pd.DataFrame (data)
-df = pd.read_csv('log.csv',delim_whitespace=True) 
+df = pd.read_csv('/home/pi/paki_new/log.csv',delim_whitespace=True) 
 print(df)
 print(df.keys())
 app = dash.Dash(__name__)

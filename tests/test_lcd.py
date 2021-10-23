@@ -28,4 +28,4 @@ lcd.create_char(0, checkmark)
 
 lcd.clear()
 # lcd.message = "\x00"
-lcd.message = "xpaki"
+lcd.message = "\xpaki"

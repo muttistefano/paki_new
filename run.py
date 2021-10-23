@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import time
 import board
 import adafruit_dht
@@ -74,12 +75,15 @@ class PakiController(object):
 
     def log_to_file(self):
         print("Logging data to file")
-        now = datetime.now()
-        s1 = now.strftime("%Y-%d-%m-%H:%M:%S")
-        str_log = s1 + " " + str(mean(self.t1_queue)) + " " + str(mean(self.h1_queue)) + " " + str(mean(self.t2_queue)) + " " + str(mean(self.h2_queue)) + " " + str(mean(self.t3_queue))  + " " + str(mean(self.h3_queue)) + " 1 1 1 1 1 1\n" 
+        try:
+            now = datetime.now()
+            s1 = now.strftime("%Y-%d-%m-%H:%M:%S")
+            str_log = s1 + " " + str(mean(self.t1_queue)) + " " + str(mean(self.h1_queue)) + " " + str(mean(self.t2_queue)) + " " + str(mean(self.h2_queue)) + " " + str(mean(self.t3_queue))  + " " + str(mean(self.h3_queue)) + " 1 1 1 1 1 1\n" 
         
-        with open("log.csv", "a") as f:
-            f.write(str(str_log))
+            with open("/home/pi/paki_new/log.csv", "a") as f:
+                f.write(str(str_log))
+        except:
+            pass
 
     def log_queue(self):
         self.t1_queue.append(self.t1)
@@ -117,7 +121,7 @@ class PakiController(object):
     def temp_read(self):
         while True:
             try:
-                print("Reading data from sensors")
+                #print("Reading data from sensors")
                 self.t1      = self.dhtDevice1.temperature
                 self.h1      = self.dhtDevice1.humidity
                 self.t2      = self.dhtDevice2.temperature
@@ -139,23 +143,38 @@ class PakiController(object):
         pass
 
     def start_threads(self):
-        temp_th_idx  = threading.Thread(target=self.temp_check)
-        temp_th_idx.start()
+        #temp_th_idx  = threading.Thread(target=self.temp_check)
+        #temp_th_idx.start()
         temp_th_idx2 = threading.Thread(target=self.temp_read)
         temp_th_idx2.start()
         print("threads started")
         return True
 
+    def plot_lcd(self):
+        self.lcd.clear()
+        self.lcd.cursor_position(0,0)
+        self.lcd.message = str(int(self.t1*10)) 
+        self.lcd.cursor_position(0,1)
+        self.lcd.message = str(int(self.h1*10)) 
+        self.lcd.cursor_position(6,0)
+        self.lcd.message = str(int(self.t2*10)) 
+        self.lcd.cursor_position(6,1)
+        self.lcd.message = str(int(self.h2*10)) 
+        self.lcd.cursor_position(13,0)
+        self.lcd.message = str(int(self.t3*10)) 
+        self.lcd.cursor_position(13,1)
+        self.lcd.message = str(int(self.h3*10)) 
+
     def run_app(self):
         while True:
-            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
-            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
-            # print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
+            #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t1, self.h1))
+            #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
+            #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
             schedule.run_pending()
             lcd_line_1 = datetime.now().strftime('%b %d  %H:%M:%S\n')
-
-            # combine both lines into one update to the display
-            self.lcd.message = lcd_line_1 
+            self.plot_lcd()
+            self.log_to_file()
+            time.sleep(5)
 
         
 
