@@ -23,10 +23,10 @@ class PakiController(object):
         self.dhtDevice2 = adafruit_dht.DHT22(board.D20, use_pulseio=False)
         self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
 
-        schedule.every().day.at("16:33").do(self.Light1On)
-        schedule.every().day.at("16:33:10").do(self.Light1Off)
-        schedule.every().day.at("16:05").do(self.Light2On)
-        schedule.every().day.at("16:05").do(self.Light2Off)
+        schedule.every().day.at("19:00").do(self.Light1On)
+        schedule.every().day.at(" 7:00").do(self.Light1Off)
+        schedule.every().day.at("19:00").do(self.Light2On)
+        schedule.every().day.at("12:00").do(self.Light2Off)
 
 
 
@@ -122,12 +122,12 @@ class PakiController(object):
         while True:
             try:
                 #print("Reading data from sensors")
-                self.t1      = self.dhtDevice1.temperature
-                self.h1      = self.dhtDevice1.humidity
-                self.t2      = self.dhtDevice2.temperature
-                self.h2      = self.dhtDevice2.humidity
-                self.t3      = self.dhtDevice3.temperature
-                self.h3      = self.dhtDevice3.humidity
+                self.t1      = self.dhtDevice1.temperature - 3.0
+                self.h1      = self.dhtDevice1.humidity - 3.0
+                self.t2      = self.dhtDevice2.temperature - 3.0
+                self.h2      = self.dhtDevice2.humidity - 3.0
+                self.t3      = self.dhtDevice3.temperature - 3.0
+                self.h3      = self.dhtDevice3.humidity - 3.0
                 self.log_queue()
                 time.sleep(2)
             except RuntimeError as error:
