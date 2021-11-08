@@ -24,9 +24,9 @@ class PakiController(object):
         self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
 
         schedule.every().day.at("19:00").do(self.Light1On)
-        schedule.every().day.at(" 7:00").do(self.Light1Off)
+        schedule.every().day.at("12:00").do(self.Light1Off)
         schedule.every().day.at("19:00").do(self.Light2On)
-        schedule.every().day.at("12:00").do(self.Light2Off)
+        schedule.every().day.at(" 7:00").do(self.Light2Off)
 
 
 
