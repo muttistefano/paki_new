@@ -30,6 +30,7 @@ class PakiController(object):
 
 
 
+
         self.temp_init()
         self.rele_init()
         self.LCD_init()
@@ -123,11 +124,11 @@ class PakiController(object):
             try:
                 #print("Reading data from sensors")
                 self.t1      = self.dhtDevice1.temperature - 3.0
-                self.h1      = self.dhtDevice1.humidity - 3.0
+                self.h1      = self.dhtDevice1.humidity + 3.0
                 self.t2      = self.dhtDevice2.temperature - 3.0
-                self.h2      = self.dhtDevice2.humidity - 3.0
+                self.h2      = self.dhtDevice2.humidity + 3.0
                 self.t3      = self.dhtDevice3.temperature - 3.0
-                self.h3      = self.dhtDevice3.humidity - 3.0
+                self.h3      = self.dhtDevice3.humidity + 3.0
                 self.log_queue()
                 time.sleep(2)
             except RuntimeError as error:
