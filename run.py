@@ -116,10 +116,10 @@ class PakiController(object):
 
         self.rele1           = DigitalInOut(board.D23)
         self.rele1.direction = Direction.OUTPUT
-        self.rele1.value     = False if (now.date() > time1on and now.date() < time1off) else True
+        self.rele1.value     = False if (now.time() > time1on and now.time() < time1off) else True
         self.rele2           = DigitalInOut(board.D24)
         self.rele2.direction = Direction.OUTPUT
-        self.rele2.value     = False if (now.date() > time2on and now.date() < time2off) else True
+        self.rele2.value     = False if (now.time() > time2on and now.time() < time2off) else True
         self.rele3           = DigitalInOut(board.D27)
         self.rele3.direction = Direction.OUTPUT
         self.rele3.value     = False
