@@ -106,12 +106,19 @@ class PakiController(object):
         self.h3_queue = collections.deque(maxlen=30)
 
     def rele_init(self):
+        now = datetime.now()
+
+        time1on  = datetime.time(19,00,00)
+        time1off = datetime.time(12,00,00)
+        time2on  = datetime.time(19,00,00)
+        time2off = datetime.time(7,0,0)
+
         self.rele1           = DigitalInOut(board.D23)
         self.rele1.direction = Direction.OUTPUT
-        self.rele1.value     = False
+        self.rele1.value     = False if (now.date() > time1on and now.date() < time1off) else True
         self.rele2           = DigitalInOut(board.D24)
         self.rele2.direction = Direction.OUTPUT
-        self.rele2.value     = False
+        self.rele2.value     = False if (now.date() > time2on and now.date() < time2off) else True
         self.rele3           = DigitalInOut(board.D27)
         self.rele3.direction = Direction.OUTPUT
         self.rele3.value     = False
