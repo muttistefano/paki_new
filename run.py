@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 from digitalio import DigitalInOut, Direction
 import threading
 import collections
-from datetime import datetime
+# from datetime import datetime
 import datetime
 from statistics import mean
 import schedule
@@ -78,7 +78,7 @@ class PakiController(object):
     def log_to_file(self):
         print("Logging data to file")
         try:
-            now = datetime.now()
+            now = datetime.datetime.now()
             s1 = now.strftime("%Y-%d-%m-%H:%M:%S")
             str_log = s1 + " " + str(mean(self.t1_queue)) + " " + str(mean(self.h1_queue)) + " " + str(mean(self.t2_queue)) + " " + str(mean(self.h2_queue)) + " " + str(mean(self.t3_queue))  + " " + str(mean(self.h3_queue)) + " 1 1 1 1 1 1\n" 
         
@@ -107,7 +107,7 @@ class PakiController(object):
         self.h3_queue = collections.deque(maxlen=30)
 
     def rele_init(self):
-        now = datetime.now()
+        now = datetime.datetime.now()
 
         time1on  = datetime.time(19,00,00)
         time1off = datetime.time(12,00,00)
@@ -180,7 +180,7 @@ class PakiController(object):
             #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t2, self.h2))
             #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
             schedule.run_pending()
-            lcd_line_1 = datetime.now().strftime('%b %d  %H:%M:%S\n')
+            lcd_line_1 = datetime.datetime.now().strftime('%b %d  %H:%M:%S\n')
             self.plot_lcd()
             self.log_to_file()
             time.sleep(5)
