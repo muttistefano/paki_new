@@ -7,6 +7,7 @@ from digitalio import DigitalInOut, Direction
 import threading
 import collections
 from datetime import datetime
+import datetime
 from statistics import mean
 import schedule
 import adafruit_character_lcd.character_lcd as characterlcd
