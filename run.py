@@ -181,6 +181,7 @@ class PakiController(object):
             #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
             schedule.run_pending()
             lcd_line_1 = datetime.datetime.now().strftime('%b %d  %H:%M:%S\n')
+            print(self.rele1.value,self.rele2.value)
             self.plot_lcd()
             self.log_to_file()
             time.sleep(5)
