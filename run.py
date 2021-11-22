@@ -60,22 +60,22 @@ class PakiController(object):
 
     def Light1On(self):
         print("Turning light 1 On")
-        self.rele1.value = True
+        self.rele1.value = False
         time.sleep(0.5)
 
     def Light1Off(self):
         print("Turning light 1 Off")
-        self.rele1.value = False
+        self.rele1.value = True
         time.sleep(0.5)
 
     def Light2On(self):
         print("Turning light 2 On")
-        self.rele2.value = True
+        self.rele2.value = False
         time.sleep(0.5)
 
     def Light2Off(self):
         print("Turning light 2 Off")
-        self.rele2.value = False
+        self.rele2.value = True
         time.sleep(0.5)
 
     def log_to_file(self):
@@ -119,16 +119,16 @@ class PakiController(object):
 
         self.rele1           = DigitalInOut(board.D18)
         self.rele1.direction = Direction.OUTPUT
-        self.rele1.value     = False if (now.time() > time1off and now.time() < time1on) else True
+        self.rele1.value     = True if (now.time() > time1off and now.time() < time1on) else False
         self.rele2           = DigitalInOut(board.D27)
         self.rele2.direction = Direction.OUTPUT
-        self.rele2.value     = False if (now.time() > time2off and now.time() < time2on) else True
+        self.rele2.value     = True if (now.time() > time2off and now.time() < time2on) else False
         self.rele3           = DigitalInOut(board.D23)
         self.rele3.direction = Direction.OUTPUT
-        self.rele3.value     = False
+        self.rele3.value     = True
         self.rele4           = DigitalInOut(board.D24)
         self.rele4.direction = Direction.OUTPUT
-        self.rele4.value     = False
+        self.rele4.value     = True
 
     def temp_read(self):
         while True:
@@ -163,15 +163,15 @@ class PakiController(object):
             time.sleep(5)
 
     def temp_check(self):
-        if(mean(self.t1_queue) > 27.0) and self.rele3.value:
-            self.rele3.value = False
-            print("spengo")
         if(mean(self.t1_queue) > 27.0) and not self.rele3.value:
-            pass
-        if(mean(self.t1_queue) < 26.5) and self.rele3.value:
+            self.rele3.value = True
+            print("spengo")
+        if(mean(self.t1_queue) > 27.0) and self.rele3.value:
             pass
         if(mean(self.t1_queue) < 26.5) and not self.rele3.value:
-            self.rele3.value = True
+            pass
+        if(mean(self.t1_queue) < 26.5) and self.rele3.value:
+            self.rele3.value = False
             print("accendo")
             
 
@@ -205,8 +205,8 @@ class PakiController(object):
             #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
             schedule.run_pending()
             lcd_line_1 = datetime.datetime.now().strftime('%b %d  %H:%M:%S\n')
-            #print(self.rele1.value,self.rele2.value)
             self.plot_lcd()
+            print(self.rele1.value,self.rele2.value,self.rele3.value,self.rele4.value)
             #self.log_to_file()
             time.sleep(5)
 
