@@ -24,6 +24,9 @@ class PakiController(object):
         self.dhtDevice2 = adafruit_dht.DHT22(board.D20, use_pulseio=False)
         self.dhtDevice3 = adafruit_dht.DHT22(board.D21, use_pulseio=False)
 
+        schedule.every(1).minutes.do(self.log_to_file)
+        schedule.every(1).minutes.do(self.temp_check)
+
         schedule.every().day.at("19:00").do(self.Light1On)
         schedule.every().day.at("12:00").do(self.Light1Off)
         schedule.every().day.at("19:00").do(self.Light2On)
@@ -76,7 +79,7 @@ class PakiController(object):
         time.sleep(0.5)
 
     def log_to_file(self):
-        print("Logging data to file")
+        #print("Logging data to file")
         try:
             now = datetime.datetime.now()
             s1 = now.strftime("%Y-%d-%m-%H:%M:%S")
@@ -114,42 +117,63 @@ class PakiController(object):
         time2on  = datetime.time(19,00,00)
         time2off = datetime.time(7,0,0)
 
-        self.rele1           = DigitalInOut(board.D23)
+        self.rele1           = DigitalInOut(board.D18)
         self.rele1.direction = Direction.OUTPUT
-        self.rele1.value     = True if (now.time() > time1on and now.time() < time1off) else True
-        self.rele2           = DigitalInOut(board.D24)
+        self.rele1.value     = False if (now.time() > time1off and now.time() < time1on) else True
+        self.rele2           = DigitalInOut(board.D27)
         self.rele2.direction = Direction.OUTPUT
-        self.rele2.value     = True if (now.time() > time2on and now.time() < time2off) else True
-        self.rele3           = DigitalInOut(board.D27)
+        self.rele2.value     = False if (now.time() > time2off and now.time() < time2on) else True
+        self.rele3           = DigitalInOut(board.D23)
         self.rele3.direction = Direction.OUTPUT
         self.rele3.value     = False
-        self.rele4           = DigitalInOut(board.D18)
+        self.rele4           = DigitalInOut(board.D24)
         self.rele4.direction = Direction.OUTPUT
         self.rele4.value     = False
 
     def temp_read(self):
         while True:
             try:
-                #print("Reading data from sensors")
-                self.t1      = self.dhtDevice1.temperature - 3.0
-                self.h1      = self.dhtDevice1.humidity + 3.0
-                self.t2      = self.dhtDevice2.temperature - 3.0
-                self.h2      = self.dhtDevice2.humidity + 3.0
-                self.t3      = self.dhtDevice3.temperature - 3.0
-                self.h3      = self.dhtDevice3.humidity + 3.0
-                self.log_queue()
-                time.sleep(2)
-            except RuntimeError as error:
-                print(error.args[0])
-                time.sleep(2.0)
-                continue
+                self.t1      = self.dhtDevice1.temperature - 2.5
             except Exception as error:
-                print(error.args[0])
-                print("MegaPD")
                 continue
+            try:
+                self.h1      = self.dhtDevice1.humidity + 3.0
+            except Exception as error:
+                continue
+            try:
+                self.t2      = self.dhtDevice2.temperature - 2.5
+            except Exception as error:
+                continue
+            try:
+                self.h2      = self.dhtDevice2.humidity + 3.0
+            except Exception as error:
+                continue
+            try:
+                self.t3      = self.dhtDevice3.temperature - 2.5
+            except Exception as error:
+                continue
+            try:
+                self.h3      = self.dhtDevice3.humidity + 3.0
+            except Exception as error:
+                continue
+            try:
+                self.log_queue()
+            except Exception as error:
+                continue
+            time.sleep(5)
 
     def temp_check(self):
-        pass
+        if(mean(self.t1_queue) > 27.0) and self.rele3.value:
+            self.rele3.value = False
+            print("spengo")
+        if(mean(self.t1_queue) > 27.0) and not self.rele3.value:
+            pass
+        if(mean(self.t1_queue) < 26.5) and self.rele3.value:
+            pass
+        if(mean(self.t1_queue) < 26.5) and not self.rele3.value:
+            self.rele3.value = True
+            print("accendo")
+            
 
     def start_threads(self):
         #temp_th_idx  = threading.Thread(target=self.temp_check)
@@ -181,9 +205,9 @@ class PakiController(object):
             #print("Temp: {:.1f} C    Humidity: {}% ".format( self.t3, self.h3))
             schedule.run_pending()
             lcd_line_1 = datetime.datetime.now().strftime('%b %d  %H:%M:%S\n')
-            print(self.rele1.value,self.rele2.value)
+            #print(self.rele1.value,self.rele2.value)
             self.plot_lcd()
-            self.log_to_file()
+            #self.log_to_file()
             time.sleep(5)
 
         
